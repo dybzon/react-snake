@@ -3,7 +3,6 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    // publicPath: '/snake/',
     filename: 'index.js',
     libraryTarget: 'commonjs2'
   },
@@ -27,24 +26,8 @@ module.exports = {
                         publicPath: '/assets/'
                     }
                 }
-            ]    
+            ]
         },
-        // {
-        //     test: /\.(jpe?g|png|gif|svg)$/i,
-        //     use: {
-        //       loader: "url-loader",
-        //       options: {
-        //         limit: 25000,
-        //       },
-        //     },            
-        // },        
-        // {
-        //     test: /\.(jpe?g|png|gif|svg)$/i,
-        //     loader: 'file-loader',
-        //     options: {
-        //         name: 'images/[name].[ext]'
-        //     }
-        // }
     ]
   },
   resolve: {
