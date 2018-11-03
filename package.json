@@ -1,0 +1,52 @@
+{
+  "name": "react-snake",
+  "version": "1.0.0",
+  "description": "A react component that renders a snake game",
+  "main": "build/index.js",
+  "publishConfig": {
+    "access": "restricted"
+  },
+   "peerDependencies": {
+    "react": ">=16.0.1",
+    "react-dom": ">=16.0.1"    
+  },
+  "scripts": {
+    "prepublish": "rm -rf ./build && npm run build",
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack-dev-server --config webpack.dev.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "snake",
+    "react-snake",
+    "game"
+  ],
+  "author": {
+    "name": "Rasmus Dybkjær",
+    "email": "rasmusdybkjaer@gmail.com"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "file-loader": "^2.0.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "styled-components": "^4.0.3",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  }
+}
