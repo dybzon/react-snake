@@ -22,6 +22,13 @@ render() {
 }
 ```
 
+## Game controls
+a: left
+s: down
+d: right
+w: up
+space: pause game
+
 ## Customization
 The `<Snake />` component takes a number of optional props. 
 
