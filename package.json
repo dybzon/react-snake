@@ -1,6 +1,6 @@
 {
   "name": "react-snake-overlay",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A react component that renders a snake game",
   "main": "build/index.js",
   "peerDependencies": {
