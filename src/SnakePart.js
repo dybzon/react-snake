@@ -78,5 +78,4 @@ const SnakePartContainer = styled.div.attrs({
   }),
 })`
   position: fixed;
-  z-index: 999;
 `;

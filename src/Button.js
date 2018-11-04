@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from './colors';
+import { colors } from './utilities/colors';
 
 export const Button = props => (
   <StyledButton onClick={props.onClick}>{props.children}</StyledButton>

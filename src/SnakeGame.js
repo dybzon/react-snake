@@ -46,14 +46,13 @@ export class SnakeGame extends React.Component {
   componentWillMount() {
     window.addEventListener('resize', this.handleResize);
     document.addEventListener('keydown', this.handleKeydown);
-
-    // This is what drives the gameplay. 
-    setInterval(this.incrementGame, this.props.gameSpeed);
+    this.initGame();
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
     document.removeEventListener('keydown', this.handleKeydown);
+    clearInterval(this.interval);
   }
 
   render() {
@@ -61,12 +60,25 @@ export class SnakeGame extends React.Component {
     return (
     <SnakeGameContainer>
       {this.props.showGameDetails 
-        && <GameDetails {...{score, lengthMoved, paused, lives}} onRestartGame={this.restartGame} />}
+        && <GameDetails {...{score, lengthMoved, paused, lives}} onRestartGame={this.initGame} />}
       <Sprites sprites={this.state.sprites} pixelSize={this.props.pixelSize} />
       <Snake snakeParts={this.state.snakeParts} pixelSize={this.props.pixelSize} isHeadOverlappingBody={this.state.isHeadOverlappingBody} />
     </SnakeGameContainer>);
   }
 
+  initGame = () => {
+    defaultSnakePart.headCoordinates = {...defaultHeadCoordinates};
+    defaultState.snakeParts = [{...defaultSnakePart}];
+    this.setState(defaultState);
+
+    // This is what drives the gameplay. 
+    this.interval = setInterval(this.advanceGame, this.props.gameSpeed);
+  }
+
+  endGame = () => {
+    clearInterval(this.interval);
+  }
+  
   handleKeydown = (e) => {
     if(validInputKeyCodes.includes(e.keyCode)){
       switch(e.keyCode) {
@@ -134,9 +146,13 @@ export class SnakeGame extends React.Component {
     this.setState({ paused: !this.state.paused});
   }
 
-  incrementGame = () => {
+  advanceGame = () => {
     // We'll only move the snake if the game is not paused
-    if(this.state.paused || this.state.lives <= 0) return;
+    if(this.state.paused) return;
+    if(this.state.lives <= 0) {
+      this.endGame();
+      return;
+    }
 
     const newState = this.state;
 
@@ -348,12 +364,6 @@ export class SnakeGame extends React.Component {
       state.nextSpriteSpawnTime = currentTime.getTime() + this.props.spriteSpawnRate * Math.random();
     }
   }
-
-  restartGame = () => {
-    defaultSnakePart.headCoordinates = {...defaultHeadCoordinates};
-    defaultState.snakeParts = [{...defaultSnakePart}];
-    this.setState(defaultState);
-  }
 }
 
 // These are the default "settings" that can be overwritten through props
@@ -375,5 +385,5 @@ const SnakeGameContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 2147483647;
 `;

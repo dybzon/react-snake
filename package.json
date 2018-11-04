@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "A react component that renders a snake game",
   "main": "build/index.js",
-  "publishConfig": {
-    "access": "restricted"
-  },
-   "peerDependencies": {
+  "peerDependencies": {
     "react": ">=16.0.1",
     "react-dom": ">=16.0.1"    
   },
