@@ -1,5 +1,5 @@
 {
-  "name": "react-snake",
+  "name": "react-snake-overlay",
   "version": "1.0.0",
   "description": "A react component that renders a snake game",
   "main": "build/index.js",
