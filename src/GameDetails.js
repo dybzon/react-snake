@@ -16,6 +16,15 @@ export class GameDetails extends React.Component {
   componentWillMount() {
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('touchend', this.handleMouseUp);
+    document.addEventListener('touchmove', this.handleMouseMove);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mouseup', this.handleMouseUp);
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('touchend', this.handleMouseUp);
+    document.removeEventListener('touchmove', this.handleMouseMove);    
   }
 
   handleMouseDown = e => {

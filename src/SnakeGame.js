@@ -21,7 +21,8 @@ const defaultState = {
   score: 0,
   lives: 3,
   isHeadOverlappingBody: false,
-  snakeMovementDirection: 'right',
+  movementDirection: 'right',
+  nextMovementDirection: 'right',
   snakeParts: [{...defaultSnakePart}],
   lastSnakePartNumber: 1,
   lengthMoved: 0,
@@ -77,28 +78,29 @@ export class SnakeGame extends React.Component {
 
   endGame = () => {
     clearInterval(this.interval);
+    this.props.onGameOver && this.props.onGameOver();
   }
   
   handleKeydown = (e) => {
     if(validInputKeyCodes.includes(e.keyCode)){
       switch(e.keyCode) {
         case 87: // movement direction up
-          if(this.state.snakeMovementDirection !== 'up' && this.state.snakeMovementDirection !== 'down') {
+          if(this.state.movementDirection !== 'up' && this.state.movementDirection !== 'down') {
             this.changeDirection('up');
           }
         break;
         case 65: // movement direction left
-          if(this.state.snakeMovementDirection !== 'left' && this.state.snakeMovementDirection !== 'right') {
+          if(this.state.movementDirection !== 'left' && this.state.movementDirection !== 'right') {
             this.changeDirection('left');
           }
         break;
         case 83: // movement direction down
-          if(this.state.snakeMovementDirection !== 'down' && this.state.snakeMovementDirection !== 'up') {
+          if(this.state.movementDirection !== 'down' && this.state.movementDirection !== 'up') {
             this.changeDirection('down');
           }
         break;
         case 68: // movement direction right
-          if(this.state.snakeMovementDirection !== 'right'  && this.state.snakeMovementDirection !== 'left') {
+          if(this.state.movementDirection !== 'right'  && this.state.movementDirection !== 'left') {
             this.changeDirection('right');
           }
         break;
@@ -139,7 +141,7 @@ export class SnakeGame extends React.Component {
   }
 
   changeDirection = newDirection => {
-    this.setState({ snakeMovementDirection: newDirection, });
+    this.setState({ nextMovementDirection: newDirection, });
   }
 
   pauseGame = () => {
@@ -197,8 +199,9 @@ export class SnakeGame extends React.Component {
   handleDirectionChange = state => {
     const snakeHead = getSnakeHead(state);
     // If the direction was changed, then we'll create a new snake head moving in the new direction
-    if(this.state.snakeMovementDirection !== snakeHead.movementDirection) {
-      const newSnakeHead = this.getNewSnakeHeadAfterDirectionChange(this.state.snakeMovementDirection);
+    if(state.nextMovementDirection !== snakeHead.movementDirection) {
+      const newSnakeHead = this.getNewSnakeHeadAfterDirectionChange(state.nextMovementDirection);
+      state.movementDirection = state.nextMovementDirection;
       state.lastSnakePartNumber++;
       state.snakeParts.push(newSnakeHead);
     }    
@@ -307,7 +310,7 @@ export class SnakeGame extends React.Component {
 
     return {
       headCoordinates: newSnakeHeadCoordinates,
-      movementDirection: this.state.snakeMovementDirection,
+      movementDirection: this.state.movementDirection,
       length: 1,
       partNumber: nextSnakePartNumber,
     };    
