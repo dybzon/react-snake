@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Snake } from './Snake.js';
 import { GameDetails } from './GameDetails';
 import { Sprites } from './Sprites';
-import { headOverlappingBody, getSnakeHead } from './utilities/helpers';
+import { headOverlappingBody, getSnakeHead } from './utilities';
 import mouse from '../assets/mouse.svg';
 import mouseHead from '../assets/mouseHead.svg';
 
@@ -57,13 +57,13 @@ export class SnakeGame extends React.Component {
   }
 
   render() {
-    const { score, lengthMoved, paused, lives } = this.state;
+    const { score, lengthMoved, paused, lives, sprites, isHeadOverlappingBody, snakeParts } = this.state;
+    const { gameDetailsDisplay, pixelSize } = this.props;
     return (
     <SnakeGameContainer>
-      {this.props.showGameDetails 
-        && <GameDetails {...{score, lengthMoved, paused, lives}} onRestartGame={this.initGame} />}
-      <Sprites sprites={this.state.sprites} pixelSize={this.props.pixelSize} />
-      <Snake snakeParts={this.state.snakeParts} pixelSize={this.props.pixelSize} isHeadOverlappingBody={this.state.isHeadOverlappingBody} />
+      <GameDetails {...{score, lengthMoved, paused, lives, gameDetailsDisplay}} onRestartGame={this.initGame} />
+      <Sprites sprites={sprites} pixelSize={pixelSize} />
+      <Snake snakeParts={snakeParts} pixelSize={pixelSize} isHeadOverlappingBody={isHeadOverlappingBody} />
     </SnakeGameContainer>);
   }
 
@@ -372,7 +372,12 @@ export class SnakeGame extends React.Component {
 // These are the default "settings" that can be overwritten through props
 SnakeGame.defaultProps = {
   pixelSize: 20, // The size of each "pixel" in the snake game.
-  showGameDetails: true, 
+  gameDetailsDisplay: {
+    score: true,
+    lengthMoved: false,
+    lives: true,
+    controls: true,
+  }, 
   onGameOver: () => {}, // Called when the game ends
   gameSpeed: 100, // Milliseconds per "increment" in the game
   spriteSpawnRate: 10000, // How often should we (at least) spawn a new sprite. A new sprite will spawn between 0 and X ms after the latest sprite.
@@ -384,9 +389,8 @@ SnakeGame.defaultProps = {
 const SnakeGameContainer = styled.div`
   width: 0;
   height: 0;
-  overflow: hidden;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2147483647;
+  z-index: 2000000;
 `;

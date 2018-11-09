@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { colors } from './utilities/colors';
+import { colors, isMobileBrowser } from './utilities';
 import { Button } from './Button';
+import { FoldableContainer } from './FoldableContainer';
 
 export class GameDetails extends React.Component {
   constructor(props) {
@@ -53,6 +54,7 @@ export class GameDetails extends React.Component {
   }
 
   render() {
+    const { lives, paused, lengthMoved, score, gameDetailsDisplay, onRestartGame } = this.props;
     const variableStyles = {
       top: `${this.state.position.y}px`,
       left: `${this.state.position.x}px`,
@@ -60,12 +62,22 @@ export class GameDetails extends React.Component {
 
     return (
       <GameDetailsContainer {...variableStyles} onMouseDown={this.handleMouseDown}>
-        {this.props.lives > 0 && <GameDetailsItem><span role="img" aria-label="snakes">Lives: {'🐍'.repeat(this.props.lives)}</span></GameDetailsItem>}
-        {this.props.lives <= 0 && <GameDetailsItem>GAME OVER!</GameDetailsItem>}
-        {this.props.lives <= 0 && <Button onClick={this.props.onRestartGame}>Restart game</Button>}
-        <GameDetailsItem>Score: {this.props.score}</GameDetailsItem>
-        <GameDetailsItem>Length moved: {this.props.lengthMoved}</GameDetailsItem>
-        {this.props.paused && (<GameDetailsItem>Game paused</GameDetailsItem>)}
+        {lives <= 0 && <GameDetailsItem>GAME OVER!</GameDetailsItem>}
+        {lives <= 0 && <Button onClick={onRestartGame}>Restart game</Button>}
+        {gameDetailsDisplay.lives && lives > 0 && <GameDetailsItem><span role="img" aria-label="snakes">Lives: {'🐍'.repeat(lives)}</span></GameDetailsItem>}
+        {gameDetailsDisplay.score && <GameDetailsItem>Score: {score}</GameDetailsItem>}
+        {gameDetailsDisplay.lengthMoved && <GameDetailsItem>Length moved: {lengthMoved}</GameDetailsItem>}
+        {gameDetailsDisplay.controls && !isMobileBrowser() &&
+          <GameDetailsItem>
+            <FoldableContainer header={'Controls'}>
+              <div>a: left</div>
+              <div>d: right</div>
+              <div>s: down</div>
+              <div>w: up</div>
+              <div>space: pause</div>
+            </FoldableContainer>
+          </GameDetailsItem>}
+        {paused && (<GameDetailsItem>Game paused</GameDetailsItem>)}
       </GameDetailsContainer>);
   }
 }
@@ -79,15 +91,13 @@ const GameDetailsContainer = styled.div.attrs({
   height: auto;
   position: fixed;
   display: flex;
+  
   flex-direction: column;
   justify-content: start;
   background-color: rgba(190, 190, 150, .2);
   cursor: pointer;
   border: 2px solid ${colors.snakeGreen1};
-
-  :hover {
-    border: 2px solid ${colors.snakeGreen2};
-  }
+  text-align: left;
 `;
 
 const GameDetailsItem = styled.div`
