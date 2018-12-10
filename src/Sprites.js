@@ -3,7 +3,8 @@ import { Sprite } from './Sprite';
 export const Sprites = props => (props.sprites.map(spriteProps => {
   const currentTime = new Date();
   const timeLeft = spriteProps.spawnTime.getTime() + spriteProps.lifetime - currentTime.getTime();
-  const timeLeftInSeconds = Math.round(timeLeft / 1000);
+  let timeLeftInSeconds = Math.round(timeLeft / 1000);
+  timeLeftInSeconds = timeLeftInSeconds > 10 ? 10 : timeLeftInSeconds;
   return (
     <Sprite 
       {...spriteProps} 

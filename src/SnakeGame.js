@@ -373,10 +373,10 @@ export class SnakeGame extends React.Component {
 SnakeGame.defaultProps = {
   pixelSize: 20, // The size of each "pixel" in the snake game.
   gameDetailsDisplay: {
-    score: true,
-    lengthMoved: false,
-    lives: true,
-    controls: true,
+    score: true, // Determines whether to display the score (number of sprites eaten).
+    lengthMoved: false, // Determines whether to display the length moved.
+    lives: true, // Determines whether to display the number of lives left.
+    controls: true, // Determines whether to display the game controls.
   }, 
   onGameOver: () => {}, // Called when the game ends
   gameSpeed: 100, // Milliseconds per "increment" in the game

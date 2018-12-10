@@ -54,9 +54,11 @@ export const SnakePart = props => {
 
   const rotation = rotationsPerDirection.find(r => r.direction === props.movementDirection).rotation;
 
-  // We'll pass the variable styles in as a style object (which will be applied as in-line styles).
-  // Otherwise styled-components will create a new class
-  // every time the styles are changed.
+  /**
+   * We'll pass the variable styles in as a style object (which will be applied as in-line styles).
+   * Otherwise styled-components will create a new class
+   * every time the styles are changed. 
+   */
   const variableStyles = {
     borderRadius: props.isHead ? '0px 5px 5px 0px' : '0px',
     width: `${calculatedLength}px`,

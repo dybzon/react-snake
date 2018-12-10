@@ -34,14 +34,19 @@ The `<Snake />` component takes a number of optional props.
 
 The default props are:
 ```
-defaultProps = {
+SnakeGame.defaultProps = {
   pixelSize: 20, // The size of each "pixel" in the snake game.
-  showGameDetails: true, // Determines whether a box with game details (score, lives) is displayed.
-  onGameOver: () => {}, // Callback function that is called when the game ends.
-  gameSpeed: 100, // Milliseconds per "increment" in the game.
+  gameDetailsDisplay: {
+    score: true, // Determines whether to display the score (number of sprites eaten).
+    lengthMoved: false, // Determines whether to display the length moved.
+    lives: true, // Determines whether to display the number of lives left.
+    controls: true, // Determines whether to display the game controls.
+  }, 
+  onGameOver: () => {}, // Called when the game ends
+  gameSpeed: 100, // Milliseconds per "increment" in the game
   spriteSpawnRate: 10000, // How often should we (at least) spawn a new sprite. A new sprite will spawn between 0 and X ms after the latest sprite.
-  spriteMinlifetime: 10000, // Minimum lifetime of each sprite.
-  spriteMaxlifetime: 40000, // Maximum lifetime of each sprite.
+  spriteMinlifetime: 10000, // Minimum lifetime of each sprite
+  spriteMaxlifetime: 40000, // Maximum lifetime of each sprite,
   spriteContent: [<img src={mouseHead} />, <img src={mouse} />], // The content of the sprite. Should be an array. The content of each sprite will be picked at random at runtime.
 };
 ```
